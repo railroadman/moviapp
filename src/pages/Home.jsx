@@ -4,10 +4,12 @@ import '../css/Home.css'
 import { getPopularMovies, searchMovies } from '../services/api'
 function Home() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
 
   const [movies, setMovies] = useState([])
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     const loadPopularMovies = async () => {
       try {
@@ -15,7 +17,7 @@ function Home() {
         setMovies(popularMovies)
       } catch (err) {
         console.log(err)
-        setError('Failed to laod movies')
+        setError('Failed to load movies')
       } finally {
         setLoading(false)
       }
@@ -25,20 +27,21 @@ function Home() {
 
   const handleSeach = async e => {
     e.preventDefault()
-    if (!searchQuery.trim()) return
-    if (loading) return
+    if (!searchQuery.trim() || isSearching) return
 
+    setIsSearching(true)
     setLoading(true)
+
     try {
-      console.log('here')
       const searchResults = await searchMovies(searchQuery)
       setMovies(searchResults)
       setError(null)
     } catch (err) {
-      onselectionchange.log(err)
+      console.log(err)
       setError('Failed to search movies')
     } finally {
       setLoading(false)
+      setIsSearching(false)
     }
   }
   return (
@@ -51,8 +54,12 @@ function Home() {
           value={searchQuery}
           className='search-input'
         />
-        <button type='submit' className='search-button'>
-          Search
+        <button
+          type='submit'
+          className='search-button'
+          disabled={isSearching || loading}
+        >
+          {isSearching ? 'Searching...' : 'Search'}
         </button>
       </form>
       {error && <div className='error-message'>{error}</div>}
