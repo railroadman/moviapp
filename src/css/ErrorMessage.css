@@ -1,0 +1,16 @@
+/* components/css/ErrorMessage.css */
+.error-message {
+  padding: 20px;
+  background-color: #ffebee; /* Светло-красный фон */
+  border: 1px solid #ffcdd2; /* Граница */
+  border-radius: 8px;
+  color: #c62828; /* Темно-красный текст */
+  text-align: center;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.error-message h2 {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+}

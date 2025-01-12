@@ -1,57 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+// components/MovieDetails.jsx
+import React from 'react'
 import '../css/MovieDetails.css'
-import { getMovieDetails } from '../services/api'
-function MovieDetails() {
-  const { id } = useParams()
-  console.log('Rendering MovieDetails component')
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [movie, setMovie] = useState(null)
-  const isMounted = useRef(true) // Добавляем ref для отслеживания монтирования
 
-  useEffect(() => {
-    console.log('Component mounted or ID changed:', id)
-
-    const fetchMovieDetails = async id => {
-      try {
-        if (!isMounted.current) return // Проверяем, смонтирован ли компонент
-
-        setLoading(true)
-        setError(null)
-
-        console.log('Starting API request for ID:', id)
-        const data = await getMovieDetails(id)
-        console.log('API response:', data)
-
-        if (!data) {
-          throw new Error('No data received from API')
-        }
-        console.log('SET MOVIE')
-        setMovie(data)
-      } catch (err) {
-        if (!isMounted.current) return
-
-        console.error('Error fetching movie details:', err)
-        setError(err.message || 'Failed to fetch movie details')
-      } finally {
-        console.log('FINALLY  I AM HER')
-        if (isMounted.current) {
-          setLoading(false)
-        }
-      }
-    }
-    console.log('Calling fetchMovieDetails')
-    fetchMovieDetails(id)
-
-    // Cleanup function
-    return () => {
-      console.log('Component unmounted')
-      isMounted.current = false
-    }
-  }, [id]) // Зависимость только от id
-  console.log('ID:', id)
-  console.log('Current state:', { loading, error, movie })
+const MovieDetails = ({ movie }) => {
+  // Вспомогательные функции для форматирования
   const formatDate = dateString => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -65,10 +17,6 @@ function MovieDetails() {
       style: 'currency',
       currency: 'USD',
     }).format(amount)
-  }
-
-  if (!movie) {
-    return <p>Loading movie details...</p>
   }
 
   return (
@@ -151,4 +99,5 @@ function MovieDetails() {
     </div>
   )
 }
+
 export default MovieDetails
