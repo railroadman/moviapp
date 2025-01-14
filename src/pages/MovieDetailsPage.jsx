@@ -10,6 +10,7 @@ const MovieDetailsPage = () => {
   const [movie, setMovie] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [posterLoaded, setPosterLoaded] = useState(false)
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -57,7 +58,12 @@ const MovieDetailsPage = () => {
     return <ErrorMessage message='Movie not found' />
   }
 
-  return <MovieDetails movie={movie} />
+  return (
+    <div>
+      {movie.poster_path && !posterLoaded && <Loader />}
+      <MovieDetails movie={movie} onPosterLoad={() => setPosterLoaded(true)} />
+    </div>
+  )
 }
 
 export default MovieDetailsPage

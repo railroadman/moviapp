@@ -2,8 +2,9 @@
 import React from 'react'
 import '../css/MovieDetails.css'
 
-const MovieDetails = ({ movie }) => {
-  // Вспомогательные функции для форматирования
+const MovieDetails = ({ movie, onPosterLoad }) => {
+  if (!movie) return null
+
   const formatDate = dateString => {
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -23,9 +24,10 @@ const MovieDetails = ({ movie }) => {
     <div className='movie-details'>
       <div className='movie-header'>
         <img
-          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-          alt={`${movie.title} poster`}
           className='movie-poster'
+          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+          onLoad={onPosterLoad}
+          onError={onPosterLoad}
         />
         <div className='movie-info'>
           <h1 className='movie-title'>{movie.title}</h1>

@@ -1,12 +1,10 @@
-// components/Loader.jsx
 import React from 'react'
-import '../css/Loader.css' // Подключаем стили
+import '../css/Loader.css'
 
 const Loader = () => {
   return (
-    <div className='loader'>
+    <div className='loader-container'>
       <div className='spinner'></div>
-      <p>Loading...</p>
     </div>
   )
 }

@@ -11,8 +11,11 @@
 }
 
 .movie-poster {
-  width: 300px;
-  border-radius: 10px;
+  width: 300px; /* Фиксированная ширина */
+  height: auto; /* Сохраняем пропорции */
+  border-radius: 8px;
+  object-fit: cover; /* Сохраняем пропорции без искажений */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .movie-info {

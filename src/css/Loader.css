@@ -1,19 +1,17 @@
-/* components/css/Loader.css */
-.loader {
+.loader-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 100vh; /* Занимает всю высоту экрана */
+  align-items: center;
+  height: 100vh;
 }
 
 .spinner {
-  border: 4px solid #f3f3f3; /* Светлый круг */
-  border-top: 4px solid #3498db; /* Синий круг */
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite; /* Анимация вращения */
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
@@ -23,10 +21,4 @@
   100% {
     transform: rotate(360deg);
   }
-}
-
-.loader p {
-  margin-top: 10px;
-  font-size: 1rem;
-  color: #333;
 }
