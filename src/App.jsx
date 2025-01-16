@@ -3,6 +3,7 @@ import NavBar from './components/NavBar'
 import { MovieProvider } from './contexts/MovieContext'
 import './css/App.css'
 import Favorites from './pages/Favorites'
+import GenreMovies from './pages/GenreMovies/GenreMovies'
 import Home from './pages/Home'
 import MovieDetailsPage from './pages/MovieDetailsPage'
 MovieDetailsPage
@@ -16,6 +17,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/favorites' element={<Favorites />} />
             <Route path='/movie/:id' element={<MovieDetailsPage />} />
+            <Route path='/genre/:genreId' element={<GenreMovies />} />
           </Routes>
         </main>
       </MovieProvider>
