@@ -85,3 +85,40 @@
   height: 40px;
   width: auto;
 }
+
+.movie-cast {
+  margin-top: 2rem;
+}
+
+.cast-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cast-member {
+  text-align: center;
+}
+
+.cast-photo {
+  width: 100%;
+  border-radius: 8px;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+
+.cast-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.cast-name {
+  font-weight: bold;
+}
+
+.cast-character {
+  font-size: 0.9rem;
+  color: #666;
+}

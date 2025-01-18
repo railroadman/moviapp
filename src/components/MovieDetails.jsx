@@ -1,8 +1,9 @@
 // components/MovieDetails.jsx
 import React from 'react'
+import { Link } from 'react-router-dom'
 import '../css/MovieDetails.css'
 
-const MovieDetails = ({ movie, onPosterLoad }) => {
+const MovieDetails = ({ movie, cast, onPosterLoad }) => {
   if (!movie) return null
 
   const formatDate = dateString => {
@@ -36,15 +37,40 @@ const MovieDetails = ({ movie, onPosterLoad }) => {
             <span className='rating-value'>{movie.vote_average}</span>
             <span className='rating-count'>({movie.vote_count} votes)</span>
           </div>
+          <div className='movie-overview'>
+            <h2>Overview</h2>
+            <p>{movie.overview}</p>
+          </div>
         </div>
       </div>
+      {cast.length > 0 && (
+        <div className='movie-cast'>
+          <h2>Cast</h2>
+          <div className='cast-grid'>
+            {cast.slice(0, 10).map(actor => (
+              <div className='cast-member' key={actor.id}>
+                <Link to={`/actor/${actor.id}`} className='cast-member'>
+                  <img
+                    src={
+                      actor.profile_path
+                        ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                        : '/default-avatar.png' // Запасное изображение
+                    }
+                    alt={actor.name}
+                    className='cast-photo'
+                  />
+                </Link>
+                <div className='cast-info'>
+                  <span className='cast-name'>{actor.name}</span>
+                  <span className='cast-character'>{actor.character}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className='movie-content'>
-        <div className='movie-overview'>
-          <h2>Overview</h2>
-          <p>{movie.overview}</p>
-        </div>
-
         <div className='movie-details-grid'>
           <div className='detail-item'>
             <span className='detail-label'>Release Date:</span>

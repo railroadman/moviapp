@@ -3,11 +3,12 @@ import { useParams } from 'react-router-dom'
 import ErrorMessage from '../components/ErrorMessage'
 import Loader from '../components/Loader'
 import MovieDetails from '../components/MovieDetails'
-import { getMovieDetails } from '../services/api'
+import { getMovieCast, getMovieDetails } from '../services/api'
 
 const MovieDetailsPage = () => {
   const { id } = useParams()
   const [movie, setMovie] = useState(null)
+  const [cast, setCast] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [posterLoaded, setPosterLoaded] = useState(false)
@@ -20,15 +21,17 @@ const MovieDetailsPage = () => {
         setLoading(true)
         setError(null)
 
-        const data = await getMovieDetails(id, {
-          signal: abortController.signal,
-        })
+        const [movieData, castData] = await Promise.all([
+          getMovieDetails(id),
+          getMovieCast(id),
+        ])
 
-        if (!data) {
+        if (!movieData) {
           throw new Error('No data received from API')
         }
 
-        setMovie(data)
+        setMovie(movieData)
+        setCast(castData)
       } catch (err) {
         if (err.name !== 'AbortError') {
           console.error('Error fetching movie details:', err)
@@ -61,7 +64,11 @@ const MovieDetailsPage = () => {
   return (
     <div>
       {movie.poster_path && !posterLoaded && <Loader />}
-      <MovieDetails movie={movie} onPosterLoad={() => setPosterLoaded(true)} />
+      <MovieDetails
+        movie={movie}
+        cast={cast}
+        onPosterLoad={() => setPosterLoaded(true)}
+      />
     </div>
   )
 }

@@ -79,3 +79,14 @@ export const getMovieCast = async movieId => {
     throw error
   }
 }
+
+export const getActorDetails = async actorId => {
+  const response = await fetch(
+    `${BASE_URL}/person/${actorId}?api_key=${API_KEY}&append_to_response=movie_credits`
+  )
+  const data = await response.json()
+  return {
+    ...data,
+    movieCredits: data.movie_credits?.cast || [],
+  }
+}
